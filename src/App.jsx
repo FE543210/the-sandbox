@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Github, ExternalLink, ArrowDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { Github, ExternalLink, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import './index.css';
 
 const projects = [
@@ -40,6 +39,18 @@ const projects = [
 
 export default function App() {
   const [cardOrder, setCardOrder] = useState([0, 1, 2]);
+  const projectsRef = useRef(null);
+
+  const scrollProjects = (direction) => {
+    if (projectsRef.current) {
+      const { scrollLeft, clientWidth } = projectsRef.current;
+      const scrollAmount = clientWidth * 0.8; // Scroll by 80% of container width
+      projectsRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const handleCardClick = (id) => {
     if (cardOrder[2] === id) return;
@@ -168,30 +179,38 @@ export default function App() {
             );
           })}
           
-          {/* Navigation Indicator */}
+          {/* Navigation Indicator - Subtle dots */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
             style={{
               position: 'absolute',
-              bottom: '-3rem',
+              bottom: '-2rem',
               width: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '1rem',
-              color: '#fff',
-              fontWeight: 900,
-              fontSize: '1.2rem',
+              gap: '0.4rem',
               zIndex: 0
             }}
           >
-            <span>&lt;</span> Click to shuffle <span>&gt;</span>
+            {[0, 1, 2].map(dot => (
+              <div 
+                key={dot}
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: cardOrder[2] === dot ? '#fff' : 'rgba(255,255,255,0.3)',
+                  transition: 'background-color 0.3s'
+                }}
+              />
+            ))}
           </motion.div>
         </div>
 
-        <div style={{ position: 'absolute', bottom: '4vw', left: '4vw', zIndex: 10 }}>
+        <div style={{ position: 'absolute', bottom: '4vw', right: '4vw', zIndex: 10 }}>
            <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.2rem', fontWeight: 900 }}>
              Scroll to see projects <ArrowDown size={28} strokeWidth={4} />
            </a>
@@ -199,14 +218,48 @@ export default function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" style={{ backgroundColor: '#fff', color: '#000', padding: '10vw 4vw', position: 'relative' }}>
-         <h2 className="text-massive" style={{ marginBottom: '8vw', color: '#000' }}>The Damage.</h2>
+      <section id="projects" style={{ backgroundColor: '#fff', color: '#000', padding: '10vw 0', position: 'relative' }}>
+         <h2 className="text-massive" style={{ marginBottom: '4vw', color: '#000', paddingLeft: '4vw' }}>The Damage.</h2>
 
-         <div style={{ 
-           display: 'grid', 
-           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-           gap: '4vw' 
-         }}>
+         {/* Carousel Controls Container */}
+         <div style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center' }}>
+           
+           {/* Left Arrow */}
+           <button 
+             onClick={() => scrollProjects('left')}
+             className="carousel-btn left"
+             style={{
+                position: 'absolute',
+                left: '1vw',
+                zIndex: 20,
+                background: '#fff',
+                border: '2px solid #000',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+             }}
+           >
+             <ChevronLeft size={36} strokeWidth={3} />
+           </button>
+
+           {/* Horizontally Scrollable Container */}
+           <div 
+             ref={projectsRef}
+             className="hide-scrollbar"
+             style={{ 
+               display: 'flex', 
+               gap: '3vw', 
+               overflowX: 'auto',
+               scrollSnapType: 'x mandatory',
+               padding: '4vw 10vw 4vw 4vw', // Extra right padding so last card doesn't hit edge
+               width: '100%'
+             }}
+           >
            {projects.map((proj, idx) => (
              <motion.div 
                key={idx}
@@ -222,6 +275,9 @@ export default function App() {
                transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
+                 minWidth: 'clamp(320px, 40vw, 450px)',
+                 flexShrink: 0,
+                 scrollSnapAlign: 'start',
                  margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0', // Staggered layout 
                  willChange: "transform, filter"
                }}
@@ -257,6 +313,30 @@ export default function App() {
                 </div>
              </motion.div>
            ))}
+         </div>
+
+         {/* Right Arrow */}
+         <button 
+             onClick={() => scrollProjects('right')}
+             className="carousel-btn right"
+             style={{
+                position: 'absolute',
+                right: '1vw',
+                zIndex: 20,
+                background: '#fff',
+                border: '2px solid #000',
+                borderRadius: '50%',
+                width: '60px',
+                height: '60px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+             }}
+           >
+             <ChevronRight size={36} strokeWidth={3} />
+           </button>
          </div>
       </section>
 

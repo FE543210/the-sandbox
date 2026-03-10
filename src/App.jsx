@@ -1,156 +1,213 @@
 import React from 'react';
-import { Github, ExternalLink, ArrowRight } from 'lucide-react';
+import { Github, ExternalLink, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './index.css';
 
 const projects = [
   {
-    title: 'Gravity Protocol: A reinforcement learning agent for logistics.',
-    description: 'Optimizes supply chain networks via advanced simulation.',
+    title: 'Gravity Protocol',
+    description: 'Reinforcement learning agent for logistics. Optimizes supply chain networks via advanced simulation.',
     tech: ['Python', 'PyTorch'],
     link: '#',
-    github: '#'
+    github: '#',
+    type: 'white'
   },
   {
-    title: 'Sentient UI: Generative interfaces reacting to user frustration.',
-    description: 'Dynamic React components modified by LLM feedback.',
+    title: 'Sentient UI',
+    description: 'Generative interfaces reacting to user frustration. Dynamic React components modified by LLM feedback.',
     tech: ['Next.js', 'LLM'],
     link: '#',
-    github: '#'
+    github: '#',
+    type: 'black'
   },
   {
-    title: 'Neural DB: Database using embeddings for indexless queries.',
-    description: 'Because who needs traditional indexing anyway?',
+    title: 'Neural DB',
+    description: 'Database using embeddings for indexless queries. Because who needs traditional indexing anyway?',
     tech: ['Rust', 'Vector DB'],
     link: '#',
-    github: '#'
+    github: '#',
+    type: 'white'
   },
   {
     title: 'Project Omega.',
     description: 'It knows what you did last summer.',
-    tech: ['TensorFlow'],
+    tech: ['TensorFlow', 'Secret API'],
     link: '#',
-    github: '#'
+    github: '#',
+    type: 'white'
   }
 ];
 
 export default function App() {
   return (
-    <div className="theme--night" style={{ minHeight: '100vh', paddingBottom: '4rem' }}>
-      <header style={{ padding: '2rem 0', borderBottom: '2px solid #333' }}>
-        <div className="cah-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.05em' }}>
-            Filip. AI.
-          </h2>
-          <nav style={{ display: 'flex', gap: '2rem', fontWeight: 'bold' }}>
-            <a href="#projects" className="hover-underline">Projects</a>
-            <a href="#contact" className="hover-underline">Contact</a>
-          </nav>
-        </div>
+    <div style={{ backgroundColor: '#000', color: '#fff', width: '100vw', overflowX: 'hidden' }}>
+      
+      {/* Header */}
+      <header style={{ 
+        position: 'fixed', 
+        top: 0, left: 0, right: 0, 
+        zIndex: 100, 
+        padding: '2vw 4vw', 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-start',
+        pointerEvents: 'none'
+      }}>
+        <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', pointerEvents: 'auto' }}>Filip. AI.</h1>
+        <nav style={{ display: 'flex', gap: '2vw', pointerEvents: 'auto', fontWeight: 900, fontSize: 'clamp(1.2rem, 2vw, 1.5rem)' }}>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </header>
 
-      <main>
-        <section className="cah-container" style={{ padding: '6rem 2rem 4rem', boxSizing: 'border-box' }}>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ maxWidth: '900px', marginBottom: '2rem' }}
-          >
-            I build AI agents that actually work.
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            style={{ maxWidth: '700px', color: '#b0b0b0', marginBottom: '4rem', fontWeight: 400 }}
-          >
-            A collection of miserable failures and stunning successes in machine learning, generative UI, and reinforcement learning.
-          </motion.p>
-          
-          <motion.button 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="cah-button"
-            style={{
-              padding: '1rem 2rem',
-              background: '#fff',
-              color: '#000',
-              border: 'none',
-              fontWeight: 900,
-              fontSize: '1.2rem',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              borderRadius: '2px', // Very slight radius
-              fontFamily: 'inherit'
-            }}
-          >
-            See the damage <ArrowRight size={24} strokeWidth={3} />
-          </motion.button>
-        </section>
+      {/* Hero Section */}
+      <section style={{ 
+        minHeight: '100vh', 
+        position: 'relative', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center',
+        padding: '0 4vw'
+      }}>
+        {/* Massive Background Text */}
+        <div style={{ zIndex: 1, pointerEvents: 'none', position: 'relative', marginTop: '-10vh' }}>
+          <h2 className="text-massive" style={{ color: '#fff' }}>I build AI agents</h2>
+          <h2 className="text-massive" style={{ color: '#fff' }}>that actually work.</h2>
+        </div>
 
-        <section id="projects" className="cah-container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '2rem',
-            padding: '2rem 0'
-          }}>
-            {projects.map((proj, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
-                viewport={{ once: true, margin: '-50px' }}
-                className="cah-card"
-              >
+        {/* Fanned Cards positioned absolute within Hero visually imitating CAH */}
+        <div className="card-stack-hero" style={{
+          position: 'absolute',
+          right: '5vw',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: 'clamp(280px, 30vw, 420px)',
+          height: 'clamp(390px, 42vw, 580px)',
+          zIndex: 0,
+        }}>
+          {/* Card 1 */}
+          <motion.div 
+            initial={{ rotate: -30, x: -200, y: 200, opacity: 0 }}
+            animate={{ rotate: -15, x: -100, y: 50, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="card card-white card-shadow"
+            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom left' }}
+          >
+            <p className="text-body" style={{ fontSize: '1.5rem' }}>Some piece-of-shit portfolio website my AI made.</p>
+          </motion.div>
+          
+          {/* Card 2 (Black) */}
+          <motion.div 
+            initial={{ rotate: 10, x: 200, y: 100, opacity: 0 }}
+            animate={{ rotate: 10, x: 50, y: -20, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            className="card card-black"
+            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom right' }}
+          >
+            <p className="text-body" style={{ fontSize: '1.5rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
+          </motion.div>
+
+          {/* Card 3 (Hero Focus) */}
+          <motion.div 
+            initial={{ y: 300, opacity: 0 }}
+            animate={{ rotate: -4, x: 0, y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="card card-white card-shadow"
+            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom center' }}
+          >
+            <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>Filip's AI Portfolio.</h3>
+            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '3px solid #000', paddingTop: '1rem' }}>
+              <span>Version 1.0</span>
+            </div>
+          </motion.div>
+        </div>
+
+        <div style={{ position: 'absolute', bottom: '4vw', left: '4vw', zIndex: 10 }}>
+           <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: 900 }}>
+             Scroll to see projects <ArrowDown size={32} strokeWidth={4} />
+           </a>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" style={{ backgroundColor: '#fff', color: '#000', padding: '10vw 4vw', position: 'relative' }}>
+         <h2 className="text-massive" style={{ marginBottom: '8vw', color: '#000' }}>The Damage.</h2>
+
+         <div style={{ 
+           display: 'grid', 
+           gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+           gap: '5vw' 
+         }}>
+           {projects.map((proj, idx) => (
+             <motion.div 
+               key={idx}
+               initial={{ opacity: 0, y: 100 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true, margin: '-100px' }}
+               transition={{ duration: 0.6, delay: (idx % 2) * 0.2 }}
+               className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
+               style={{
+                 margin: idx % 2 === 0 ? '0' : '5vw 0 -5vw 0' // Staggered layout 
+               }}
+             >
                 <div>
-                  <h3 style={{ fontSize: '21px', lineHeight: '29px', color: '#000', marginBottom: '1.5rem', fontWeight: 'bold' }}>
-                    {proj.title}
-                  </h3>
-                  <p style={{ fontSize: '1rem', color: '#444', fontWeight: 500 }}>
-                    {proj.description}
-                  </p>
+                  <h3 style={{ fontSize: 'clamp(1.8rem, 2.5vw, 2.5rem)', marginBottom: '1.5rem' }}>{proj.title}</h3>
+                  <p className="text-body" style={{ fontWeight: 600 }}>{proj.description}</p>
                 </div>
                 
-                <div style={{ marginTop: '2rem' }}>
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+                <div style={{ marginTop: '3rem' }}>
+                  <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
                     {proj.tech.map(t => (
                       <span key={t} style={{ 
-                        padding: '0.2rem 0.6rem', 
-                        background: '#000', 
-                        color: '#fff', 
-                        fontSize: '0.85rem',
-                        fontWeight: 'bold',
-                        borderRadius: '2px'
+                        padding: '0.3rem 0.8rem', 
+                        background: proj.type === 'black' ? '#fff' : '#000', 
+                        color: proj.type === 'black' ? '#000' : '#fff', 
+                        fontSize: '1rem',
+                        fontWeight: 900,
+                        borderRadius: '3px'
                       }}>
                         {t}
                       </span>
                     ))}
                   </div>
-                  <div className="cah-logo-container">
-                    <a href={proj.github} style={{ color: '#000', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 800 }}>
-                      <Github size={20} strokeWidth={2.5} /> Source
+                  <div style={{ display: 'flex', gap: '1.5rem', borderTop: `4px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.5rem' }}>
+                    <a href={proj.github} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.2rem' }}>
+                      <Github size={28} strokeWidth={3} /> Source
                     </a>
-                    <a href={proj.link} style={{ color: '#000', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 800 }}>
-                      <ExternalLink size={20} strokeWidth={2.5} /> Live
+                    <a href={proj.link} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.2rem' }}>
+                      <ExternalLink size={28} strokeWidth={3} /> Live
                     </a>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      </main>
+             </motion.div>
+           ))}
+         </div>
+      </section>
 
-      <footer style={{ borderTop: '2px solid #333', padding: '4rem 2rem 2rem', marginTop: '6rem' }}>
-        <div className="cah-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <h2 style={{ fontSize: '3rem', letterSpacing: '-0.03em' }}>Hire me before<br/>the machines take over.</h2>
-          <p style={{ color: '#666', fontSize: '1rem', fontWeight: 'bold' }}>© {new Date().getFullYear()} Filip. All rights reserved.</p>
+      {/* Footer Area - Completely Black, Right Aligned */}
+      <footer id="contact" style={{ 
+        padding: '12vw 4vw 6vw', 
+        backgroundColor: '#000', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'flex-end', 
+        justifyContent: 'flex-end', 
+        minHeight: '70vh',
+        textAlign: 'right'
+      }}>
+        <h2 className="text-massive" style={{ maxWidth: '90vw' }}>
+          Hire me before<br/>the machines take over.
+        </h2>
+        
+        <div style={{ marginTop: '5vw' }}>
+          <a href="mailto:hello@filip.ai" className="btn">
+            Contact Filip
+          </a>
         </div>
+        
+        <p style={{ marginTop: '10vw', fontWeight: 900, color: '#555', fontSize: '1.2rem' }}>
+          © {new Date().getFullYear()} Filip. All rights reserved.
+        </p>
       </footer>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Github, ExternalLink, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './index.css';
@@ -39,6 +39,54 @@ const projects = [
 ];
 
 export default function App() {
+  const [cardOrder, setCardOrder] = useState([0, 1, 2]);
+
+  const handleCardClick = (id) => {
+    if (cardOrder[2] === id) return;
+    setCardOrder(prev => {
+      const remaining = prev.filter(x => x !== id);
+      return [...remaining, id];
+    });
+  };
+
+  const heroCards = [
+    {
+      id: 0,
+      className: "card card-black card-shadow-white",
+      origin: "bottom left",
+      content: (
+        <p className="text-body" style={{ fontSize: '1.3rem' }}>Some piece-of-shit portfolio website my AI made.</p>
+      )
+    },
+    {
+      id: 1,
+      className: "card card-white card-shadow",
+      origin: "bottom right",
+      content: (
+        <p className="text-body" style={{ fontSize: '1.3rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
+      )
+    },
+    {
+      id: 2,
+      className: "card card-black card-shadow-white",
+      origin: "bottom center",
+      content: (
+        <>
+          <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>The Sandbox.</h3>
+          <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '2px solid #fff', paddingTop: '1rem' }}>
+            <span>Version 1.0</span>
+          </div>
+        </>
+      )
+    }
+  ];
+
+  const positions = [
+    { rotate: -15, x: -100, y: 50, zIndex: 1 },
+    { rotate: 10, x: 50, y: -20, zIndex: 2 },
+    { rotate: -4, x: 0, y: 0, zIndex: 3 }
+  ];
+
   return (
     <div style={{ backgroundColor: '#000', color: '#fff', width: '100vw', overflowX: 'hidden' }}>
       
@@ -54,7 +102,9 @@ export default function App() {
         backgroundColor: '#000',
         borderBottom: '2px solid #222'
       }}>
-        <h1 style={{ fontSize: '1.5rem' }}>Filip. AI.</h1>
+        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <h1 style={{ fontSize: '1.5rem', cursor: 'pointer' }}>The Sandbox.</h1>
+        </a>
         <nav style={{ display: 'flex', gap: '2vw', fontWeight: 900, fontSize: '1.1rem' }}>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
@@ -73,8 +123,8 @@ export default function App() {
       }}>
         {/* Massive Background Text */}
         <div style={{ zIndex: 1, position: 'relative', marginTop: '-10vh' }}>
-          <h2 className="text-massive" style={{ color: '#fff' }}>I build AI agents</h2>
-          <h2 className="text-massive" style={{ color: '#fff' }}>that actually work.</h2>
+          <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>Where AI ideas</h2>
+          <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>come to mind.</h2>
         </div>
 
         {/* Fanned Cards positioned absolute within Hero visually imitating CAH */}
@@ -87,41 +137,36 @@ export default function App() {
           height: 'clamp(364px, 35vw, 532px)',
           zIndex: 0,
         }}>
-          {/* Card 1 (Black) */}
-          <motion.div 
-            initial={{ rotate: -30, x: -200, y: 200, opacity: 0 }}
-            animate={{ rotate: -15, x: -100, y: 50, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="card card-black card-shadow-white"
-            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom left' }}
-          >
-            <p className="text-body" style={{ fontSize: '1.3rem' }}>Some piece-of-shit portfolio website my AI made.</p>
-          </motion.div>
-          
-          {/* Card 2 (White) */}
-          <motion.div 
-            initial={{ rotate: 10, x: 200, y: 100, opacity: 0 }}
-            animate={{ rotate: 10, x: 50, y: -20, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="card card-white card-shadow"
-            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom right' }}
-          >
-            <p className="text-body" style={{ fontSize: '1.3rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
-          </motion.div>
-
-          {/* Card 3 (Black - Front) */}
-          <motion.div 
-            initial={{ y: 300, opacity: 0 }}
-            animate={{ rotate: -4, x: 0, y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="card card-black card-shadow-white"
-            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom center', backgroundColor: '#000000' }}
-          >
-            <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>Filip's AI Portfolio.</h3>
-            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '2px solid #fff', paddingTop: '1rem' }}>
-              <span>Version 1.0</span>
-            </div>
-          </motion.div>
+          {heroCards.map((card) => {
+            const posIndex = cardOrder.indexOf(card.id);
+            const pos = positions[posIndex];
+            const isFront = posIndex === 2;
+            return (
+              <motion.div 
+                key={card.id}
+                initial={{ opacity: 0, y: 300, rotate: 0 }}
+                animate={{ 
+                  opacity: 1,
+                  rotate: pos.rotate, 
+                  x: pos.x, 
+                  y: pos.y, 
+                  zIndex: pos.zIndex,
+                  scale: isFront ? 1 : 0.95 
+                }}
+                transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
+                onClick={() => handleCardClick(card.id)}
+                className={card.className}
+                style={{ 
+                  position: 'absolute', 
+                  inset: 0, 
+                  transformOrigin: card.origin,
+                  cursor: isFront ? 'default' : 'pointer'
+                }}
+              >
+                {card.content}
+              </motion.div>
+            );
+          })}
         </div>
 
         <div style={{ position: 'absolute', bottom: '4vw', left: '4vw', zIndex: 10 }}>
@@ -143,13 +188,15 @@ export default function App() {
            {projects.map((proj, idx) => (
              <motion.div 
                key={idx}
-               initial={{ opacity: 0, y: 70, scale: 0.96 }}
-               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-               viewport={{ once: true, margin: '-50px' }}
+               initial={{ opacity: 0, y: 100, filter: 'blur(10px)', scale: 0.95 }}
+               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
+               whileHover={{ y: -15, scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } }}
+               viewport={{ once: true, margin: '-100px' }}
                transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
-                 margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0' // Staggered layout 
+                 margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0', // Staggered layout 
+                 willChange: "transform, filter"
                }}
              >
                 <div>

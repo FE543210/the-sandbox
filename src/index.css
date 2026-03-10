@@ -51,7 +51,7 @@ a:hover {
 .card {
   border-radius: 12px;
   padding: 2.5rem 2rem;
-  border: 2px solid var(--black);
+  border: 1px solid var(--black);
   background-color: var(--white); /* Ensure fallback */
   aspect-ratio: 2.5 / 3.5;
   display: flex;
@@ -73,11 +73,11 @@ a:hover {
 }
 
 .card-shadow {
-  box-shadow: -10px 10px 0px rgba(0,0,0,1);
+  box-shadow: -5px 5px 0px rgba(0,0,0,1);
 }
 
 .card-shadow-white {
-  box-shadow: -10px 10px 0px rgba(255,255,255,1);
+  box-shadow: -5px 5px 0px rgba(255,255,255,1);
 }
 
 /* Typography utilities */

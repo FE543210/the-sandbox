@@ -118,7 +118,7 @@ export default function App() {
             style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom center', backgroundColor: '#000000' }}
           >
             <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>Filip's AI Portfolio.</h3>
-            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '3px solid #fff', paddingTop: '1rem' }}>
+            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '2px solid #fff', paddingTop: '1rem' }}>
               <span>Version 1.0</span>
             </div>
           </motion.div>
@@ -143,10 +143,10 @@ export default function App() {
            {projects.map((proj, idx) => (
              <motion.div 
                key={idx}
-               initial={{ opacity: 0, y: 100 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true, margin: '-100px' }}
-               transition={{ duration: 0.6, delay: (idx % 2) * 0.2 }}
+               initial={{ opacity: 0, y: 70, scale: 0.96 }}
+               whileInView={{ opacity: 1, y: 0, scale: 1 }}
+               viewport={{ once: true, margin: '-50px' }}
+               transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
                  margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0' // Staggered layout 
@@ -172,7 +172,7 @@ export default function App() {
                       </span>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: '1.5rem', borderTop: `3px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.2rem' }}>
+                  <div style={{ display: 'flex', gap: '1.5rem', borderTop: `2px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.2rem' }}>
                     <a href={proj.github} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
                       <Github size={24} strokeWidth={3} /> Source
                     </a>

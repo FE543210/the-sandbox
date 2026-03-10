@@ -82,9 +82,9 @@ export default function App() {
   ];
 
   const positions = [
-    { rotate: -15, x: -100, y: 50, zIndex: 1 },
-    { rotate: 10, x: 50, y: -20, zIndex: 2 },
-    { rotate: -4, x: 0, y: 0, zIndex: 3 }
+    { rotate: -15, x: -100, y: 50, zIndex: 10 },
+    { rotate: 10, x: 50, y: -20, zIndex: 20 },
+    { rotate: -4, x: 0, y: 0, zIndex: 30 }
   ];
 
   return (
@@ -153,7 +153,7 @@ export default function App() {
                   zIndex: pos.zIndex,
                   scale: isFront ? 1 : 0.95 
                 }}
-                transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
+                transition={{ duration: 0.9, type: "spring", bounce: 0.2 }}
                 onClick={() => handleCardClick(card.id)}
                 className={card.className}
                 style={{ 
@@ -167,6 +167,28 @@ export default function App() {
               </motion.div>
             );
           })}
+          
+          {/* Navigation Indicator */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            style={{
+              position: 'absolute',
+              bottom: '-3rem',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1rem',
+              color: '#fff',
+              fontWeight: 900,
+              fontSize: '1.2rem',
+              zIndex: 0
+            }}
+          >
+            <span>&lt;</span> Click to shuffle <span>&gt;</span>
+          </motion.div>
         </div>
 
         <div style={{ position: 'absolute', bottom: '4vw', left: '4vw', zIndex: 10 }}>
@@ -190,7 +212,12 @@ export default function App() {
                key={idx}
                initial={{ opacity: 0, y: 100, filter: 'blur(10px)', scale: 0.95 }}
                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
-               whileHover={{ y: -15, scale: 1.02, transition: { duration: 0.2, ease: "easeOut" } }}
+               whileHover={{ 
+                 y: -20, 
+                 scale: 1.05, 
+                 boxShadow: proj.type === 'black' ? "-15px 15px 0px rgba(255,255,255,1)" : "-15px 15px 0px rgba(0,0,0,1)",
+                 transition: { duration: 0.3, type: "spring", bounce: 0.4 } 
+               }}
                viewport={{ once: true, margin: '-100px' }}
                transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
@@ -240,7 +267,7 @@ export default function App() {
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'flex-end', 
-        justifyContent: 'flex-end', 
+        justifyContent: 'center', 
         minHeight: '60vh',
         textAlign: 'right'
       }}>
@@ -250,13 +277,9 @@ export default function App() {
         
         <div style={{ marginTop: '5vw' }}>
           <a href="mailto:hello@filip.ai" className="btn">
-            Contact Filip
+            Get In Contact
           </a>
         </div>
-        
-        <p style={{ marginTop: '10vw', fontWeight: 900, color: '#555', fontSize: '1.1rem' }}>
-          © {new Date().getFullYear()} Filip. All rights reserved.
-        </p>
       </footer>
     </div>
   );

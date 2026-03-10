@@ -34,7 +34,7 @@ const projects = [
     tech: ['TensorFlow', 'Secret API'],
     link: '#',
     github: '#',
-    type: 'white'
+    type: 'black'
   }
 ];
 
@@ -42,19 +42,20 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#000', color: '#fff', width: '100vw', overflowX: 'hidden' }}>
       
-      {/* Header */}
+      {/* Header - Now Solid Black to prevent white text on white bg issues */}
       <header style={{ 
         position: 'fixed', 
         top: 0, left: 0, right: 0, 
         zIndex: 100, 
-        padding: '2vw 4vw', 
+        padding: '1.5rem 4vw', 
         display: 'flex', 
         justifyContent: 'space-between', 
-        alignItems: 'flex-start',
-        pointerEvents: 'none'
+        alignItems: 'center',
+        backgroundColor: '#000',
+        borderBottom: '2px solid #222'
       }}>
-        <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', pointerEvents: 'auto' }}>Filip. AI.</h1>
-        <nav style={{ display: 'flex', gap: '2vw', pointerEvents: 'auto', fontWeight: 900, fontSize: 'clamp(1.2rem, 2vw, 1.5rem)' }}>
+        <h1 style={{ fontSize: '1.5rem' }}>Filip. AI.</h1>
+        <nav style={{ display: 'flex', gap: '2vw', fontWeight: 900, fontSize: '1.1rem' }}>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -67,10 +68,11 @@ export default function App() {
         display: 'flex', 
         flexDirection: 'column', 
         justifyContent: 'center',
-        padding: '0 4vw'
+        padding: '80px 4vw 0', // Offset header
+        overflow: 'hidden'
       }}>
         {/* Massive Background Text */}
-        <div style={{ zIndex: 1, pointerEvents: 'none', position: 'relative', marginTop: '-10vh' }}>
+        <div style={{ zIndex: 1, position: 'relative', marginTop: '-10vh' }}>
           <h2 className="text-massive" style={{ color: '#fff' }}>I build AI agents</h2>
           <h2 className="text-massive" style={{ color: '#fff' }}>that actually work.</h2>
         </div>
@@ -81,50 +83,50 @@ export default function App() {
           right: '5vw',
           top: '50%',
           transform: 'translateY(-50%)',
-          width: 'clamp(280px, 30vw, 420px)',
-          height: 'clamp(390px, 42vw, 580px)',
+          width: 'clamp(260px, 25vw, 380px)',
+          height: 'clamp(364px, 35vw, 532px)',
           zIndex: 0,
         }}>
-          {/* Card 1 */}
+          {/* Card 1 (Black) */}
           <motion.div 
             initial={{ rotate: -30, x: -200, y: 200, opacity: 0 }}
             animate={{ rotate: -15, x: -100, y: 50, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="card card-white card-shadow"
+            className="card card-black card-shadow-white"
             style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom left' }}
           >
-            <p className="text-body" style={{ fontSize: '1.5rem' }}>Some piece-of-shit portfolio website my AI made.</p>
+            <p className="text-body" style={{ fontSize: '1.3rem' }}>Some piece-of-shit portfolio website my AI made.</p>
           </motion.div>
           
-          {/* Card 2 (Black) */}
+          {/* Card 2 (White) */}
           <motion.div 
             initial={{ rotate: 10, x: 200, y: 100, opacity: 0 }}
             animate={{ rotate: 10, x: 50, y: -20, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="card card-black"
+            className="card card-white card-shadow"
             style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom right' }}
           >
-            <p className="text-body" style={{ fontSize: '1.5rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
+            <p className="text-body" style={{ fontSize: '1.3rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
           </motion.div>
 
-          {/* Card 3 (Hero Focus) */}
+          {/* Card 3 (Black - Front) */}
           <motion.div 
             initial={{ y: 300, opacity: 0 }}
             animate={{ rotate: -4, x: 0, y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="card card-white card-shadow"
-            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom center' }}
+            className="card card-black card-shadow-white"
+            style={{ position: 'absolute', inset: 0, transformOrigin: 'bottom center', backgroundColor: '#000000' }}
           >
             <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>Filip's AI Portfolio.</h3>
-            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '3px solid #000', paddingTop: '1rem' }}>
+            <div style={{ marginTop: 'auto', display: 'flex', gap: '0.5rem', fontWeight: 900, borderTop: '3px solid #fff', paddingTop: '1rem' }}>
               <span>Version 1.0</span>
             </div>
           </motion.div>
         </div>
 
         <div style={{ position: 'absolute', bottom: '4vw', left: '4vw', zIndex: 10 }}>
-           <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: 900 }}>
-             Scroll to see projects <ArrowDown size={32} strokeWidth={4} />
+           <a href="#projects" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.2rem', fontWeight: 900 }}>
+             Scroll to see projects <ArrowDown size={28} strokeWidth={4} />
            </a>
         </div>
       </section>
@@ -135,8 +137,8 @@ export default function App() {
 
          <div style={{ 
            display: 'grid', 
-           gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
-           gap: '5vw' 
+           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+           gap: '4vw' 
          }}>
            {projects.map((proj, idx) => (
              <motion.div 
@@ -147,22 +149,22 @@ export default function App() {
                transition={{ duration: 0.6, delay: (idx % 2) * 0.2 }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
-                 margin: idx % 2 === 0 ? '0' : '5vw 0 -5vw 0' // Staggered layout 
+                 margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0' // Staggered layout 
                }}
              >
                 <div>
-                  <h3 style={{ fontSize: 'clamp(1.8rem, 2.5vw, 2.5rem)', marginBottom: '1.5rem' }}>{proj.title}</h3>
+                  <h3 style={{ fontSize: 'clamp(1.6rem, 2vw, 2.2rem)', marginBottom: '1.2rem' }}>{proj.title}</h3>
                   <p className="text-body" style={{ fontWeight: 600 }}>{proj.description}</p>
                 </div>
                 
-                <div style={{ marginTop: '3rem' }}>
-                  <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+                <div style={{ marginTop: '2rem' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                     {proj.tech.map(t => (
                       <span key={t} style={{ 
-                        padding: '0.3rem 0.8rem', 
+                        padding: '0.3rem 0.6rem', 
                         background: proj.type === 'black' ? '#fff' : '#000', 
                         color: proj.type === 'black' ? '#000' : '#fff', 
-                        fontSize: '1rem',
+                        fontSize: '0.9rem',
                         fontWeight: 900,
                         borderRadius: '3px'
                       }}>
@@ -170,12 +172,12 @@ export default function App() {
                       </span>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: '1.5rem', borderTop: `4px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.5rem' }}>
-                    <a href={proj.github} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.2rem' }}>
-                      <Github size={28} strokeWidth={3} /> Source
+                  <div style={{ display: 'flex', gap: '1.5rem', borderTop: `3px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.2rem' }}>
+                    <a href={proj.github} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
+                      <Github size={24} strokeWidth={3} /> Source
                     </a>
-                    <a href={proj.link} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.2rem' }}>
-                      <ExternalLink size={28} strokeWidth={3} /> Live
+                    <a href={proj.link} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
+                      <ExternalLink size={24} strokeWidth={3} /> Live
                     </a>
                   </div>
                 </div>
@@ -192,7 +194,7 @@ export default function App() {
         flexDirection: 'column', 
         alignItems: 'flex-end', 
         justifyContent: 'flex-end', 
-        minHeight: '70vh',
+        minHeight: '60vh',
         textAlign: 'right'
       }}>
         <h2 className="text-massive" style={{ maxWidth: '90vw' }}>
@@ -205,7 +207,7 @@ export default function App() {
           </a>
         </div>
         
-        <p style={{ marginTop: '10vw', fontWeight: 900, color: '#555', fontSize: '1.2rem' }}>
+        <p style={{ marginTop: '10vw', fontWeight: 900, color: '#555', fontSize: '1.1rem' }}>
           © {new Date().getFullYear()} Filip. All rights reserved.
         </p>
       </footer>

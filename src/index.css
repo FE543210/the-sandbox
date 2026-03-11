@@ -12,16 +12,16 @@
   padding: 0;
 }
 
-html, body {
+html, body, #root {
   width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  background-color: var(--black) !important;
+  color: var(--white);
 }
 
 body {
   font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: var(--black);
-  color: var(--white);
   -webkit-font-smoothing: antialiased;
 }
 

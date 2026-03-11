@@ -35,6 +35,30 @@ const projects = [
     link: '#',
     github: '#',
     type: 'black'
+  },
+  {
+    title: 'Quantum Learn',
+    description: 'A study on accelerating neural networks using quantum annealing.',
+    tech: ['Qiskit', 'Python'],
+    link: '#',
+    github: '#',
+    type: 'white'
+  },
+  {
+    title: 'Autonomous Swarm',
+    description: 'A reinforcement learning environment for multi-agent drone coordination.',
+    tech: ['C++', 'ROS2'],
+    link: '#',
+    github: '#',
+    type: 'black'
+  },
+  {
+    title: 'Cybernetic Core',
+    description: 'Memory management framework for long-running LLM instances.',
+    tech: ['Rust', 'WASM'],
+    link: '#',
+    github: '#',
+    type: 'white'
   }
 ];
 
@@ -45,7 +69,7 @@ export default function App() {
   const scrollProjects = (direction) => {
     if (projectsRef.current) {
       const { scrollLeft, clientWidth } = projectsRef.current;
-      const scrollAmount = clientWidth * 0.8; // Scroll by 80% of container width
+      const scrollAmount = clientWidth * 0.8;
       projectsRef.current.scrollTo({
         left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
         behavior: 'smooth'
@@ -65,7 +89,6 @@ export default function App() {
     {
       id: 0,
       className: "card card-black card-shadow-white",
-      origin: "bottom left",
       content: (
         <p className="text-body" style={{ fontSize: '1.3rem' }}>Some piece-of-shit portfolio website my AI made.</p>
       )
@@ -73,7 +96,6 @@ export default function App() {
     {
       id: 1,
       className: "card card-white card-shadow",
-      origin: "bottom right",
       content: (
         <p className="text-body" style={{ fontSize: '1.3rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
       )
@@ -81,7 +103,6 @@ export default function App() {
     {
       id: 2,
       className: "card card-black card-shadow-white",
-      origin: "bottom center",
       content: (
         <>
           <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)', fontWeight: 900 }}>The Sandbox.</h3>
@@ -94,9 +115,9 @@ export default function App() {
   ];
 
   const positions = [
-    { rotate: -15, x: -100, y: 50, zIndex: 10 },
-    { rotate: 10, x: 50, y: -20, zIndex: 20 },
-    { rotate: -4, x: 0, y: 0, zIndex: 30 }
+    { rotate: -12, x: -180, y: 30, zIndex: 10 },
+    { rotate: 12, x: 180, y: -10, zIndex: 20 },
+    { rotate: 0, x: 0, y: 0, zIndex: 30 }
   ];
 
   return (
@@ -107,7 +128,7 @@ export default function App() {
         position: 'fixed', 
         top: 0, left: 0, right: 0, 
         zIndex: 100, 
-        padding: '1.5rem 4vw', 
+        padding: '1.5rem 2vw', // Reduced padding so it's closer to the corners
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
@@ -142,11 +163,11 @@ export default function App() {
         {/* Fanned Cards positioned absolute within Hero visually imitating CAH */}
         <div className="card-stack-hero" style={{
           position: 'absolute',
-          right: '5vw',
+          right: 'max(15vw, 220px)', // Move cards further in from the right edge
           top: '50%',
           transform: 'translateY(-50%)',
-          width: 'clamp(260px, 25vw, 380px)',
-          height: 'clamp(364px, 35vw, 532px)',
+          width: 'clamp(240px, 22vw, 320px)', // Slightly shrunk to prevent clipping on smaller screens
+          height: 'clamp(336px, 30.8vw, 448px)',
           zIndex: 0,
         }}>
           {heroCards.map((card) => {
@@ -165,14 +186,15 @@ export default function App() {
                   zIndex: pos.zIndex,
                   scale: isFront ? 1 : 0.95 
                 }}
-                transition={{ duration: 0.9, type: "spring", bounce: 0.2 }}
+                transition={{ duration: 0.5, type: "spring", bounce: 0.25 }}
                 onClick={() => handleCardClick(card.id)}
                 className={card.className}
                 style={{ 
                   position: 'absolute', 
                   inset: 0, 
-                  transformOrigin: card.origin,
-                  cursor: isFront ? 'default' : 'pointer'
+                  transformOrigin: 'bottom center', // Uniform origin prevents weird looping arcs
+                  cursor: isFront ? 'default' : 'pointer',
+                  pointerEvents: 'auto'
                 }}
               >
                 {card.content}
@@ -180,7 +202,7 @@ export default function App() {
             );
           })}
           
-          {/* Navigation Indicator - Subtle dots */}
+          {/* Navigation Indicator */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -219,48 +241,76 @@ export default function App() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" style={{ backgroundColor: '#fff', color: '#000', padding: '10vw 0', position: 'relative' }}>
+      <section id="projects" style={{ backgroundColor: '#fff', color: '#000', padding: '6vw 0', position: 'relative' }}>
          <h2 className="text-massive" style={{ marginBottom: '4vw', color: '#000', paddingLeft: '4vw' }}>The Damage.</h2>
 
-         {/* Carousel Controls Container */}
-         <div style={{ position: 'relative', width: '100%', display: 'flex', alignItems: 'center' }}>
-           
-           {/* Left Arrow */}
-           <button 
-             onClick={() => scrollProjects('left')}
-             className="carousel-btn left"
-             style={{
-                position: 'absolute',
-                left: '1vw',
-                zIndex: 20,
-                background: '#fff',
-                border: '2px solid #000',
-                borderRadius: '50%',
-                width: '60px',
-                height: '60px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                cursor: 'pointer',
-                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
-             }}
-           >
-             <ChevronLeft size={36} strokeWidth={3} />
-           </button>
+         {/* Left Arrow (Absolute positioning to container, not flex wrapper) */}
+         <button 
+           onClick={() => scrollProjects('left')}
+           className="carousel-btn left"
+           style={{
+              position: 'absolute',
+              left: '4vw',
+              top: '55%',
+              transform: 'translateY(-50%)',
+              zIndex: 30,
+              background: '#fff',
+              border: '2px solid #000',
+              borderRadius: '50%',
+              width: '4rem',
+              height: '4rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+              boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+           }}
+         >
+           <ChevronLeft size={36} strokeWidth={3} />
+         </button>
 
-           {/* Horizontally Scrollable Container */}
-           <div 
-             ref={projectsRef}
-             className="hide-scrollbar"
-             style={{ 
-               display: 'flex', 
-               gap: '3vw', 
-               overflowX: 'auto',
-               scrollSnapType: 'x mandatory',
-               padding: '4vw 10vw 4vw 4vw', // Extra right padding so last card doesn't hit edge
-               width: '100%'
-             }}
-           >
+         {/* Right Arrow */}
+         <button 
+           onClick={() => scrollProjects('right')}
+           className="carousel-btn right"
+           style={{
+              position: 'absolute',
+              right: '4vw',
+              top: '55%',
+              transform: 'translateY(-50%)',
+              zIndex: 30,
+              background: '#fff',
+              border: '2px solid #000',
+              borderRadius: '50%',
+              width: '4rem',
+              height: '4rem',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+              boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+           }}
+         >
+           <ChevronRight size={36} strokeWidth={3} />
+         </button>
+
+         {/* Carousel Window */}
+         <div 
+           ref={projectsRef}
+           className="hide-scrollbar"
+           style={{ 
+             display: 'flex', 
+             gap: '3rem', 
+             overflowX: 'auto',
+             scrollSnapType: 'x mandatory',
+             padding: '2vw 10vw 4vw 8vw', // Provide padding so cards don't stick to the buttons
+             scrollPaddingLeft: '8vw',
+             width: '100%',
+             position: 'relative',
+             zIndex: 10,
+             alignItems: 'center' // Prevents flex children from vertically stretching to match tallest
+           }}
+         >
            {projects.map((proj, idx) => (
              <motion.div 
                key={idx}
@@ -269,17 +319,17 @@ export default function App() {
                whileHover={{ 
                  y: -20, 
                  scale: 1.05, 
-                 boxShadow: proj.type === 'black' ? "-15px 15px 0px rgba(255,255,255,1)" : "-15px 15px 0px rgba(0,0,0,1)",
+                 boxShadow: "-15px 15px 0px rgba(0,0,0,0.9)", // Ensures both black and white cards have a dark shadow against the white background
                  transition: { duration: 0.3, type: "spring", bounce: 0.4 } 
                }}
                viewport={{ once: true, margin: '-100px' }}
                transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
-                 minWidth: 'clamp(320px, 40vw, 450px)',
+                 width: 'clamp(280px, 30vw, 360px)', // Fixed sizing width, height driven by aspect-ratio in CSS
                  flexShrink: 0,
-                 scrollSnapAlign: 'start',
-                 margin: idx % 2 === 0 ? '0' : '4vw 0 -4vw 0', // Staggered layout 
+                 scrollSnapAlign: 'center',
+                 margin: '0', 
                  willChange: "transform, filter"
                }}
              >
@@ -314,41 +364,18 @@ export default function App() {
                 </div>
              </motion.div>
            ))}
-           </div>
-           {/* Right Arrow */}
-           <button 
-             onClick={() => scrollProjects('right')}
-             className="carousel-btn right"
-             style={{
-                position: 'absolute',
-                right: '1vw',
-                zIndex: 20,
-                background: '#fff',
-                border: '2px solid #000',
-                borderRadius: '50%',
-                width: '60px',
-                height: '60px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                cursor: 'pointer',
-                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
-             }}
-           >
-             <ChevronRight size={36} strokeWidth={3} />
-           </button>
          </div>
       </section>
 
       {/* Footer Area - Completely Black, Right Aligned */}
       <footer id="contact" style={{ 
-        padding: '12vw 4vw 6vw', 
+        padding: '8vw 4vw 4vw', 
         backgroundColor: '#000', 
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'flex-end', 
         justifyContent: 'center', 
-        minHeight: '60vh',
+        minHeight: '80vh', // Increased slightly to prevent any potential white gaps at the bottom of standard screens
         textAlign: 'right'
       }}>
         <h2 className="text-massive" style={{ maxWidth: '90vw' }}>

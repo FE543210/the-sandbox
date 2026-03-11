@@ -107,14 +107,14 @@ export default function App() {
       id: 0,
       className: "card card-black card-shadow-white",
       content: (
-        <p className="text-body" style={{ fontSize: '1.3rem' }}>Some piece-of-shit portfolio website my AI made.</p>
+        <p className="text-body" style={{ fontSize: 'clamp(1rem, 4vw, 1.3rem)' }}>Some piece-of-shit portfolio website my AI made.</p>
       )
     },
     {
       id: 1,
       className: "card card-white card-shadow",
       content: (
-        <p className="text-body" style={{ fontSize: '1.3rem', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
+        <p className="text-body" style={{ fontSize: 'clamp(1rem, 4vw, 1.3rem)', fontWeight: 800 }}>A reinforcement learning agent that optimizes logistics.</p>
       )
     },
     {
@@ -164,7 +164,7 @@ export default function App() {
         <a href="/" style={{ textDecoration: 'none', color: 'inherit', pointerEvents: 'auto' }}>
           <h1 style={{ fontSize: '1.5rem', cursor: 'pointer' }}>The Sandbox.</h1>
         </a>
-        <nav style={{ display: 'flex', gap: '2vw', fontWeight: 900, fontSize: '1.1rem', pointerEvents: 'auto' }}>
+        <nav style={{ display: 'flex', gap: 'clamp(1rem, 3vw, 2rem)', fontWeight: 900, fontSize: '1.1rem', pointerEvents: 'auto' }}>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -357,7 +357,7 @@ export default function App() {
                transition={{ duration: 0.8, delay: (idx % 2) * 0.15, ease: [0.22, 1, 0.36, 1] }}
                className={`card ${proj.type === 'black' ? 'card-black' : 'card-white'}`}
                style={{
-                 width: 'clamp(280px, 30vw, 360px)', // Fixed sizing width, height driven by aspect-ratio in CSS
+                 width: 'clamp(280px, 75vw, 360px)', // Fluid width taking up most width on mobile, clipping at 360px desktop
                  flexShrink: 0,
                  scrollSnapAlign: 'center',
                  margin: '0', 

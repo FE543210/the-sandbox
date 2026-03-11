@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Github, ExternalLink, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import './index.css';
 
 const projects = [
@@ -313,10 +314,9 @@ export default function App() {
                 </div>
              </motion.div>
            ))}
-         </div>
-
-         {/* Right Arrow */}
-         <button 
+           </div>
+           {/* Right Arrow */}
+           <button 
              onClick={() => scrollProjects('right')}
              className="carousel-btn right"
              style={{

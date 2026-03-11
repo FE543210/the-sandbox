@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Github, ExternalLink, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import './index.css';
@@ -65,6 +65,23 @@ const projects = [
 export default function App() {
   const [cardOrder, setCardOrder] = useState([0, 1, 2]);
   const projectsRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (projectsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = projectsRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      // Extra pixel buffer due to subpixel rendering rounding issues or fractional scroll widths
+      setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 1);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollPosition();
+    window.addEventListener('resize', checkScrollPosition);
+    return () => window.removeEventListener('resize', checkScrollPosition);
+  }, []);
 
   const scrollProjects = (direction) => {
     if (projectsRef.current) {
@@ -115,13 +132,21 @@ export default function App() {
   ];
 
   const positions = [
-    { rotate: -12, x: -180, y: 30, zIndex: 10 },
-    { rotate: 12, x: 180, y: -10, zIndex: 20 },
+    { rotate: -10, x: -140, y: 20, zIndex: 10 },
+    { rotate: 10, x: 140, y: -10, zIndex: 20 },
     { rotate: 0, x: 0, y: 0, zIndex: 30 }
   ];
 
   return (
-    <div style={{ backgroundColor: '#000', color: '#fff', width: '100vw', overflowX: 'hidden' }}>
+    <div style={{ backgroundColor: '#000', color: '#fff', width: '100vw', minHeight: '100vh', overflowX: 'hidden' }}>
+      
+      {/* Global CSS hard-override for iOS/Mac rubberband scrolling showing white */}
+      <style>{`
+        html, body, #root {
+          background-color: #000 !important;
+          margin: 0;
+        }
+      `}</style>
       
       {/* Header - Now Solid Black to prevent white text on white bg issues */}
       <header style={{ 
@@ -133,12 +158,13 @@ export default function App() {
         justifyContent: 'space-between', 
         alignItems: 'center',
         backgroundColor: '#000',
-        borderBottom: '2px solid #222'
+        borderBottom: '2px solid #222',
+        pointerEvents: 'none'
       }}>
-        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <a href="/" style={{ textDecoration: 'none', color: 'inherit', pointerEvents: 'auto' }}>
           <h1 style={{ fontSize: '1.5rem', cursor: 'pointer' }}>The Sandbox.</h1>
         </a>
-        <nav style={{ display: 'flex', gap: '2vw', fontWeight: 900, fontSize: '1.1rem' }}>
+        <nav style={{ display: 'flex', gap: '2vw', fontWeight: 900, fontSize: '1.1rem', pointerEvents: 'auto' }}>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -155,7 +181,7 @@ export default function App() {
         overflow: 'hidden'
       }}>
         {/* Massive Background Text */}
-        <div style={{ zIndex: 1, position: 'relative', marginTop: '-10vh' }}>
+        <div style={{ zIndex: 1, position: 'relative', marginTop: '-10vh', pointerEvents: 'none' }}>
           <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>Where AI ideas</h2>
           <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>come to mind.</h2>
         </div>
@@ -245,58 +271,63 @@ export default function App() {
          <h2 className="text-massive" style={{ marginBottom: '4vw', color: '#000', paddingLeft: '4vw' }}>The Damage.</h2>
 
          {/* Left Arrow (Absolute positioning to container, not flex wrapper) */}
-         <button 
-           onClick={() => scrollProjects('left')}
-           className="carousel-btn left"
-           style={{
-              position: 'absolute',
-              left: '4vw',
-              top: '55%',
-              transform: 'translateY(-50%)',
-              zIndex: 30,
-              background: '#fff',
-              border: '2px solid #000',
-              borderRadius: '50%',
-              width: '4rem',
-              height: '4rem',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              cursor: 'pointer',
-              boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
-           }}
-         >
-           <ChevronLeft size={36} strokeWidth={3} />
-         </button>
+         {canScrollLeft && (
+           <button 
+             onClick={() => scrollProjects('left')}
+             className="carousel-btn left"
+             style={{
+                position: 'absolute',
+                left: '4vw',
+                top: '55%',
+                transform: 'translateY(-50%)',
+                zIndex: 30,
+                background: '#fff',
+                border: '2px solid #000',
+                borderRadius: '50%',
+                width: '4rem',
+                height: '4rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+             }}
+           >
+             <ChevronLeft size={36} strokeWidth={3} />
+           </button>
+         )}
 
          {/* Right Arrow */}
-         <button 
-           onClick={() => scrollProjects('right')}
-           className="carousel-btn right"
-           style={{
-              position: 'absolute',
-              right: '4vw',
-              top: '55%',
-              transform: 'translateY(-50%)',
-              zIndex: 30,
-              background: '#fff',
-              border: '2px solid #000',
-              borderRadius: '50%',
-              width: '4rem',
-              height: '4rem',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              cursor: 'pointer',
-              boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
-           }}
-         >
-           <ChevronRight size={36} strokeWidth={3} />
-         </button>
+         {canScrollRight && (
+           <button 
+             onClick={() => scrollProjects('right')}
+             className="carousel-btn right"
+             style={{
+                position: 'absolute',
+                right: '4vw',
+                top: '55%',
+                transform: 'translateY(-50%)',
+                zIndex: 30,
+                background: '#fff',
+                border: '2px solid #000',
+                borderRadius: '50%',
+                width: '4rem',
+                height: '4rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+                boxShadow: '-4px 4px 0px rgba(0,0,0,1)'
+             }}
+           >
+             <ChevronRight size={36} strokeWidth={3} />
+           </button>
+         )}
 
          {/* Carousel Window */}
          <div 
            ref={projectsRef}
+           onScroll={checkScrollPosition}
            className="hide-scrollbar"
            style={{ 
              display: 'flex', 

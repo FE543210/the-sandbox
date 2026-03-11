@@ -406,7 +406,7 @@ export default function App() {
         flexDirection: 'column', 
         alignItems: 'flex-end', 
         justifyContent: 'center', 
-        minHeight: '80vh', // Increased slightly to prevent any potential white gaps at the bottom of standard screens
+        minHeight: '100vh', // Fully covers screen to avoid white banner from previous section
         textAlign: 'right'
       }}>
         <h2 className="text-massive" style={{ maxWidth: '90vw' }}>

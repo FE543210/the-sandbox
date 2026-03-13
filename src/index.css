@@ -127,7 +127,20 @@ a:hover {
     display: none !important;
   }
   .text-massive {
-    font-size: clamp(2rem, 10vw, 7rem);
+    font-size: clamp(2rem, 10vw, 4rem); /* Reduced the max limit so long words don't overflow */
+    word-break: break-word; /* Ensure it wraps nicely instead of bleeding */
+  }
+  .hero-text-container {
+     margin-top: -30vh !important; /* Push title up to make room for cards */
+  }
+  .card-stack-hero {
+     top: 65% !important; /* Push cards down so they don't cover the title */
+     right: auto !important; /* Center the cards */
+     left: 50% !important;
+     transform: translate(-50%, -50%) !important;
+  }
+  .footer-text {
+    font-size: clamp(1.8rem, 8vw, 3.5rem); /* Make footer slightly smaller to fit naturally */
   }
 }
 .hide-scrollbar::-webkit-scrollbar { display: none; }

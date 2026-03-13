@@ -170,6 +170,7 @@ export default function App() {
         </nav>
       </header>
 
+      <main>
       {/* Hero Section */}
       <section style={{ 
         minHeight: '100vh', 
@@ -181,19 +182,21 @@ export default function App() {
         overflow: 'hidden'
       }}>
         {/* Massive Background Text */}
-        <div style={{ zIndex: 1, position: 'relative', marginTop: '-10vh', pointerEvents: 'none' }}>
-          <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>Where AI ideas</h2>
-          <h2 className="text-massive" style={{ color: '#fff', fontSize: 'clamp(2rem, 5.5vw, 5.5rem)' }}>come to mind.</h2>
+        <div className="hero-text-container" style={{ zIndex: 10, position: 'relative', marginTop: '-10vh', pointerEvents: 'none' }}>
+          <h2 className="text-massive" style={{ color: '#fff' }}>
+            Where AI ideas<br />
+            come to mind.
+          </h2>
         </div>
 
         {/* Fanned Cards positioned absolute within Hero visually imitating CAH */}
         <div className="card-stack-hero" style={{
           position: 'absolute',
-          right: 'max(15vw, 220px)', // Move cards further in from the right edge
+          right: 'clamp(2vw, 15vw, 220px)', // Pull closer to right edge on small screens
           top: '50%',
           transform: 'translateY(-50%)',
-          width: 'clamp(240px, 22vw, 320px)', // Slightly shrunk to prevent clipping on smaller screens
-          height: 'clamp(336px, 30.8vw, 448px)',
+          width: 'clamp(200px, 35vw, 320px)', // Allow to shrink more on mobile
+          height: 'clamp(280px, 49vw, 448px)',
           zIndex: 0,
         }}>
           {heroCards.map((card) => {
@@ -275,6 +278,7 @@ export default function App() {
            <button 
              onClick={() => scrollProjects('left')}
              className="carousel-btn left"
+             aria-label="Scroll left"
              style={{
                 position: 'absolute',
                 left: '4vw',
@@ -302,6 +306,7 @@ export default function App() {
            <button 
              onClick={() => scrollProjects('right')}
              className="carousel-btn right"
+             aria-label="Scroll right"
              style={{
                 position: 'absolute',
                 right: '4vw',
@@ -343,7 +348,7 @@ export default function App() {
            }}
          >
            {projects.map((proj, idx) => (
-             <motion.div 
+             <motion.article 
                key={idx}
                initial={{ opacity: 0, y: 100, filter: 'blur(10px)', scale: 0.95 }}
                whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
@@ -393,10 +398,11 @@ export default function App() {
                     </a>
                   </div>
                 </div>
-             </motion.div>
+             </motion.article>
            ))}
          </div>
       </section>
+      </main>
 
       {/* Footer Area - Completely Black, Right Aligned */}
       <footer id="contact" style={{ 
@@ -409,7 +415,7 @@ export default function App() {
         minHeight: '100vh', // Fully covers screen to avoid white banner from previous section
         textAlign: 'right'
       }}>
-        <h2 className="text-massive" style={{ maxWidth: '90vw' }}>
+        <h2 className="text-massive footer-text" style={{ maxWidth: '90vw' }}>
           Hire me before<br/>the machines take over.
         </h2>
         

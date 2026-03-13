@@ -390,10 +390,10 @@ export default function App() {
                     ))}
                   </div>
                   <div style={{ display: 'flex', gap: '1.5rem', borderTop: `2px solid ${proj.type ==='black' ? '#fff' : '#000'}`, paddingTop: '1.2rem' }}>
-                    <a href={proj.github} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
+                    <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
                       <Github size={24} strokeWidth={3} /> Source
                     </a>
-                    <a href={proj.link} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
+                    <a href={proj.link} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, fontSize: '1.1rem' }}>
                       <ExternalLink size={24} strokeWidth={3} /> Live
                     </a>
                   </div>
